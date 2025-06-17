@@ -1,27 +1,24 @@
-// src/modules/ventas/venta.entity.ts
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-} from 'typeorm';
+// venta.entity.ts
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { DetalleVenta } from '../detalleVenta/detalle-venta.entity';
 
 @Entity()
 export class Venta {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('json')
-  items: {
-    productoId: number;
-    nombre: string;
-    cantidadPiezas: number;
-    precioUnitario: number;
-  }[];
+  @Column()
+  totalPrecio: number;
 
-  @Column('decimal')
-  total: number;
+  @Column()
+  totalPiezas: number;
 
-  @CreateDateColumn()
-  fecha: Date;
+  @Column({ type: 'date' })
+  fecha: string;
+
+  @OneToMany(() => DetalleVenta, (detalle) => detalle.venta, {
+    cascade: true,
+    eager: true,
+  })
+  detalles: DetalleVenta[];
 }
