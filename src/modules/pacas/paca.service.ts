@@ -29,7 +29,9 @@ export class PacasService {
   async create(createPacaDto: CreatePacaDto) {
     const { detalles, ...data } = createPacaDto;
 
-    const paca = this.pacaRepo.create(data);
+    const precioMN = createPacaDto.precio * createPacaDto.cambio;
+
+    const paca = this.pacaRepo.create({ ...data, precioMN });
     const savedPaca = await this.pacaRepo.save(paca);
 
     if (detalles?.length) {

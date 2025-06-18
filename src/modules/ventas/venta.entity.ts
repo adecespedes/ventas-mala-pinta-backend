@@ -7,10 +7,10 @@ export class Venta {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ name: 'totalPrecio' })
   totalPrecio: number;
 
-  @Column()
+  @Column({ name: 'totalPiezas' })
   totalPiezas: number;
 
   @Column({ type: 'date' })

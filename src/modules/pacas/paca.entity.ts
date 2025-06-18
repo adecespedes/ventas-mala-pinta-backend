@@ -32,6 +32,9 @@ export class Paca {
   precio: number;
 
   @Column()
+  precioMN: number;
+
+  @Column()
   cambio: number;
 
   @Column({ type: 'date' })

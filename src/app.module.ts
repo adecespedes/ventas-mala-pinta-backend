@@ -4,6 +4,7 @@ import { ProductosModule } from './modules/productos/producto.module';
 import { PacasModule } from './modules/pacas/paca.module';
 import { TiposModule } from './modules/tipo/tipo.module';
 import { VentasModule } from './modules/ventas/venta.module';
+import { EstadisticasModule } from './modules/estadisticas/estadistica.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { VentasModule } from './modules/ventas/venta.module';
     PacasModule,
     TiposModule,
     VentasModule,
+    EstadisticasModule,
   ],
 })
 export class AppModule {}
