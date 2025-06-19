@@ -7,10 +7,18 @@ import { DetalleVenta } from '../detalleVenta/detalle-venta.entity';
 import { Producto } from '../productos/producto.entity';
 import { Tipo } from '../tipo/tipo.entity';
 import { Paca } from '../pacas/paca.entity';
+import { Detalle } from '../detalle/detalle.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Venta, DetalleVenta, Producto, Tipo, Paca]),
+    TypeOrmModule.forFeature([
+      Venta,
+      DetalleVenta,
+      Producto,
+      Tipo,
+      Paca,
+      Detalle,
+    ]),
   ],
   controllers: [EstadisticasController],
   providers: [EstadisticasService],

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Venta } from '../ventas/venta.entity';
 import { Paca } from '../pacas/paca.entity';
 import { DetalleVenta } from '../detalleVenta/detalle-venta.entity';
+import { Detalle } from '../detalle/detalle.entity';
 
 @Injectable()
 export class EstadisticasService {
@@ -16,6 +17,9 @@ export class EstadisticasService {
 
     @InjectRepository(DetalleVenta)
     private readonly detalleRepo: Repository<DetalleVenta>,
+
+    @InjectRepository(Detalle)
+    private readonly detallePacaRepo: Repository<Detalle>,
   ) {}
 
   async ventasTotales(periodo: string): Promise<
@@ -215,5 +219,32 @@ export class EstadisticasService {
       .getRawOne<{ mes: string; totalPiezas: string; totalPrecio: string }>();
 
     return ventasPorMes;
+  }
+
+  async resumenPiezas(): Promise<{
+    piezasVendidas: number;
+    piezasRestantes: number;
+  }> {
+    // Piezas vendidas
+    const resultadoVenta = await this.ventaRepo
+      .createQueryBuilder('dv')
+      .select('SUM(dv.totalPiezas)', 'total')
+      .getRawOne<{ total: string | null }>();
+
+    const piezasVendidas = Number(resultadoVenta?.total || 0);
+
+    // Piezas disponibles (registradas en las pacas)
+    const resultadoPaca = await this.pacaRepo
+      .createQueryBuilder('d')
+      .select('SUM(d.cantidad)', 'total')
+      .getRawOne<{ total: string | null }>();
+
+    const piezasTotales = Number(resultadoPaca?.total || 0);
+    const piezasRestantes = piezasTotales - piezasVendidas;
+
+    return {
+      piezasVendidas,
+      piezasRestantes,
+    };
   }
 }

@@ -25,6 +25,11 @@ export class EstadisticasController {
     return this.service.resumenFinanciero();
   }
 
+  @Get('resumen-piezas')
+  resumenPiezas() {
+    return this.service.resumenPiezas();
+  }
+
   // @Get('ventas-por-tipo')
   // ventasPorTipo() {
   //   return this.service.ventasPorTipo();
